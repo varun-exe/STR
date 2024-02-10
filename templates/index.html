@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <nav class="min-vh-100 bg-light d-none d-md-flex flex-column justify-content-between" style="width: 250px;">
+        <ul class="list-group list-group-flush pt-5">
+            <li class="list-group-item list-group-item-action active">General info</li>
+            <li class="list-group-item list-group-item-action">Semester 1</li>
+            <li class="list-group-item list-group-item-action">Semester 2</li>
+            <li class="list-group-item list-group-item-action">Semester 3</li>
+            <li class="list-group-item list-group-item-action">Semester 4</li>
+            <li class="list-group-item list-group-item-action">Semester 5</li>
+            <li class="list-group-item list-group-item-action">Semester 6</li>
+            <li class="list-group-item list-group-item-action">Semester 7</li>
+            <li class="list-group-item list-group-item-action">Semester 8</li>
+
+          </ul>
+          <div class="user-dropdown mb-5">
+              <hr>
+              <div class="dropdown">
+                <a href="#" class="dropdown-toggle link-dark text-decoration-none d-flex align-items-center justify-content-start ms-3" data-bs-toggle="dropdown" aria-expanded="false" role="button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+                    </svg>
+                    <span class="fs-5 ms-3">Username</span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">Action</a></li>
+                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+              </div>
+          </div>
+    </nav>
+
+    <button class="btn btn-outline-primary d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+        Menu
+    </button>
+      
+    <div class="offcanvas offcanvas-start w-50" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body d-flex flex-column justify-content-between">
+        <ul class="list-group list-group-flush pt-5">
+            <li class="list-group-item list-group-item-action active">General info</li>
+            <li class="list-group-item list-group-item-action">Semester 1</li>
+            <li class="list-group-item list-group-item-action">Semester 2</li>
+            <li class="list-group-item list-group-item-action">Semester 3</li>
+            <li class="list-group-item list-group-item-action">Semester 4</li>
+            <li class="list-group-item list-group-item-action">Semester 5</li>
+            <li class="list-group-item list-group-item-action">Semester 6</li>
+            <li class="list-group-item list-group-item-action">Semester 7</li>
+            <li class="list-group-item list-group-item-action">Semester 8</li>
+
+          </ul>
+          <div class="user-dropdown">
+              <hr>
+              <div class="dropdown">
+                <a href="#" class="dropdown-toggle link-dark text-decoration-none d-flex align-items-center justify-content-start ms-3" data-bs-toggle="dropdown" aria-expanded="false" role="button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+                    </svg>
+                    <span class="fs-5 ms-3">Username</span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">Action</a></li>
+                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+              </div>
+          </div>
+    </div>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</html>
