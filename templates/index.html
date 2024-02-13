@@ -97,6 +97,7 @@
           </div>
     </nav>
 
+    <!-- table for attendance -->
     <div class="table-responsive">
       <table class="table table-bordered table-sm">
         <thead>
@@ -121,21 +122,6 @@
             </tr>
         </thead>
         <tbody id="attendanceTable">
-          <!-- <tr>
-            <td>test</td>
-            <td>test</td>
-            <td>test</td>
-            <td>test</td>
-            <td>test</td>
-            <td>test</td>
-            <td>test</td>
-            <td>test</td>
-            <td>test</td>
-            <td>test</td>
-            <td>test</td>
-            <td>test</td>
-  
-          </tr> -->
           <tr>
               <td><input type="text"></td>
               <td><input type="text"></td>
@@ -153,7 +139,8 @@
         </tbody>
     </table>
     </div>
-    <button type="button" class="btn btn-light btn-small d-flex align-items-center" id="addBtn">
+    <!-- add row button for attendance table  -->
+    <button type="button" class="btn btn-light btn-small d-flex align-items-center" id="attendanceAddBtn">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
         <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
@@ -162,7 +149,143 @@
         Add row
       </span>
     </button>
+    <!-- hidden counter for number of rows -->
+    <input type="number" aria-hidden="true" id="iatTotalRows" class="d-none">
 
+    <!-- table for iat -->
+    <div class="table-responsive">
+      <table class="table table-bordered table-sm">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>code</th>
+                <th>subjects</th>
+                <th>Max</th>
+                <th>iat-1</th>
+                <th>iat-2</th>
+                <th>iat-3</th>
+                <th>avg</th>
+            </tr>
+        </thead>
+        <tbody id="iatTable">
+          <tr>
+              <td><input type="text"></td>
+              <td><input type="text"></td>
+              <td><input type="text"></td>
+              <td><input type="text"></td>
+              <td><input type="text"></td>
+              <td><input type="text"></td>
+              <td><input type="text"></td>
+              <td><input type="text"></td>
+          </tr>
+        </tbody>
+    </table>
+    </div>
+    <!-- add row button for iat table  -->
+    <button type="button" class="btn btn-light btn-small d-flex align-items-center" id="iatAddBtn">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+      </svg>
+      <span class="ms-1">
+        Add row
+      </span>
+    </button>
+    <!-- hidden counter for number of rows -->
+    <input type="number" aria-hidden="true" id="attendanceTotalRows" class="d-none">
+
+    
+    <!-- table for events -->
+    <div class="table-responsive">
+      <table class="table table-bordered table-sm">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>club name</th>
+            <th>event title</th>
+            <th>event date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><input type="text"></td>
+            <td><input type="text"></td>
+            <td><input type="textbox"></td>
+            <td><input type="date"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+    <!-- table for MOOC -->
+    <div class="table-responsive">
+      <table class="table table-bordered table-sm">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Under</th>
+            <th>MOOC title</th>
+            <th>start date</th>
+            <th>completed date</th>
+            <th>score</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><input type="text"></td>
+            <td><input type="text"></td>
+            <td><input type="text"></td>
+            <td><input type="text"></td>
+            <td><input type="text"></td>
+            <td><input type="text"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- table for mini project -->
+    <div class="table-responsive">
+      <table class="table table-bordered table-sm">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Mini project title</th>
+            <th>Man hours</th>
+            <th>start date</th>
+            <th>completed date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><input type="text"></td>
+            <td><input type="text"></td>
+            <td><input type="text"></td>
+            <td><input type="text"></td>
+            <td><input type="text"></td>  
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-bordered table-sm">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Date</th>
+            <th>counselling records</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><input type="text"></td>
+            <td><input type="text"></td>
+            <td><input type="text"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
     
 </body>
