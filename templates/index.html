@@ -99,7 +99,7 @@
 
     <!-- table for attendance -->
     <div class="table-responsive">
-      <table class="table table-bordered table-sm">
+      <table class="table table-bordered table-sm mb-0">
         <thead>
             <tr>
                 <th rowspan="2">#</th>
@@ -140,7 +140,7 @@
     </table>
     </div>
     <!-- add row button for attendance table  -->
-    <button type="button" class="btn btn-light btn-small d-flex align-items-center" id="attendanceAddBtn">
+    <button type="button" class="btn btn-light btn-small d-flex align-items-center addBtn" id="attendanceAddBtn" data-for="attendanceTable" data-increement="iatTotalRows">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
         <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
@@ -154,7 +154,7 @@
 
     <!-- table for iat -->
     <div class="table-responsive">
-      <table class="table table-bordered table-sm">
+      <table class="table table-bordered table-sm mb-0">
         <thead>
             <tr>
                 <th>#</th>
@@ -182,7 +182,7 @@
     </table>
     </div>
     <!-- add row button for iat table  -->
-    <button type="button" class="btn btn-light btn-small d-flex align-items-center" id="iatAddBtn">
+    <button type="button" class="btn btn-light btn-small d-flex align-items-center addBtn" id="iatAddBtn" data-for="iatTable" data-increement="attendanceTotalRows">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
         <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
@@ -197,7 +197,7 @@
     
     <!-- table for events -->
     <div class="table-responsive">
-      <table class="table table-bordered table-sm">
+      <table class="table table-bordered table-sm mb-0">
         <thead>
           <tr>
             <th>#</th>
@@ -206,7 +206,7 @@
             <th>event date</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="eventsTable">
           <tr>
             <td><input type="text"></td>
             <td><input type="text"></td>
@@ -216,11 +216,22 @@
         </tbody>
       </table>
     </div>
+    <button type="button" class="btn btn-light btn-small d-flex align-items-center addBtn" id="eventsAddBtn" data-for="eventsTable" data-increement="eventsTotalRows">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+      </svg>
+      <span class="ms-1">
+        Add row
+      </span>
+    </button>
+    <!-- hidden counter for number of rows -->
+    <input type="number" aria-hidden="true" id="eventsTotalRows" class="d-none">
 
 
     <!-- table for MOOC -->
     <div class="table-responsive">
-      <table class="table table-bordered table-sm">
+      <table class="table table-bordered table-sm mb-0">
         <thead>
           <tr>
             <th>#</th>
@@ -231,7 +242,7 @@
             <th>score</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="moocTable">
           <tr>
             <td><input type="text"></td>
             <td><input type="text"></td>
@@ -243,6 +254,19 @@
         </tbody>
       </table>
     </div>
+    <!-- button for adding rows -->
+    <button type="button" class="btn btn-light btn-small d-flex align-items-center addBtn" id="moocAddBtn" data-for="moocTable" data-increement="moocTotalRows">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+      </svg>
+      <span class="ms-1">
+        Add row
+      </span>
+    </button>
+    <!-- hidden counter for number of rows -->
+    <input type="number" aria-hidden="true" id="moocTotalRows" class="d-none">
+
 
     <!-- table for mini project -->
     <div class="table-responsive">
@@ -256,7 +280,7 @@
             <th>completed date</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="projectTable">
           <tr>
             <td><input type="text"></td>
             <td><input type="text"></td>
@@ -267,7 +291,20 @@
         </tbody>
       </table>
     </div>
+     <!-- button for adding rows -->
+     <button type="button" class="btn btn-light btn-small d-flex align-items-center addBtn" id="projectAddBtn" data-for="projectTable" data-increement="projectTotalRows">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+      </svg>
+      <span class="ms-1">
+        Add row
+      </span>
+    </button>
+    <!-- hidden counter for number of rows -->
+    <input type="number" aria-hidden="true" id="projectTotalRows" class="d-none">
 
+    <!-- table for counselling records -->
     <div class="table-responsive">
       <table class="table table-bordered table-sm">
         <thead>
@@ -277,7 +314,7 @@
             <th>counselling records</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="counsellingTable">
           <tr>
             <td><input type="text"></td>
             <td><input type="text"></td>
@@ -286,6 +323,18 @@
         </tbody>
       </table>
     </div>
+    <!-- button for adding rows -->
+    <button type="button" class="btn btn-light btn-small d-flex align-items-center addBtn" id="counsellingAddBtn" data-for="counsellingTable" data-increement="counsellingTotalRows">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+      </svg>
+      <span class="ms-1">
+        Add row
+      </span>
+    </button>
+    <!-- hidden counter for number of rows -->
+    <input type="number" aria-hidden="true" id="counsellingTotalRows" class="d-none">
 
     
 </body>
