@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+
+{% block title %} test form {% endblock %}
+
+{% block body %}
+<form action="/editform" method="post">
+    <input type="text" name="test">
+    <input type="text" name="test">
+    <input type="submit">
+</form>
+{% endblock %}

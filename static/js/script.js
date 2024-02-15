@@ -8,7 +8,6 @@ addButtons.forEach(function(btn) {
 
 function addRow() {
     table = document.getElementById(this.getAttribute("data-for"));
-    console.log(table);
     row = table.rows[0];
     table.insertAdjacentHTML("beforeend", row.innerHTML)
     document.getElementById(this.getAttribute("data-increement")).value = Number(document.getElementById(this.getAttribute("data-increement")).value) + 1; 
