@@ -23,6 +23,9 @@ class Users(db.Model):
     project_info = db.relationship('Project', backref='user')
     counselling_info = db.relationship('Counselling', backref='user')
 
+    def __repr__(self):
+        return f"{self.id} {self.email}"
+    
 
 class General(db.Model):
     __tablename__ = 'general_information'
@@ -45,6 +48,9 @@ class General(db.Model):
     mmobile = db.Column(db.String(20))
     permanent_address = db.Column(db.String(200))
     bro_sis = db.Column(db.String(300))
+
+    def __repr__(self):
+        return f"{self.user_id} {self.name}"
 
 
 
@@ -160,7 +166,7 @@ def login():
         password=request.form.get('password')
         user = Users.query.filter_by(email=email).first()
         
-        if user.password == password:
+        if user and user.password == password:
             session["user_id"] = user.id
             return redirect("/general")
         else:
@@ -177,16 +183,63 @@ def general():
         # TODO
         pass
     else:
-        General.query.filter_by(id=session["user_id"]).first()
-        return render_template("general.html")
+        general_info = General.query.filter_by(user_id=session["user_id"]).first()
+        print("*" * 10)
+        print(general_info)
+        print("*" * 10)
+        return render_template("general.html", general=general_info)
 
 
-@app.route("/semester<int:semester_number>")
+@app.route("/semester<int:semester_number>", methods=['GET', 'POST'])
 def semester(semester_number):
-    return render_template("semester.html")
 
-
-@app.route("/testform")
-def testform():
+    if request.method == 'POST':
+        #TODO
+        pass
+    else:
+        return render_template("semester.html")
     
-    return render_template("testform.html")
+
+
+@app.route("/general-edit", methods=['GET', 'POST'])
+def edit():
+    if request.method == 'POST':
+        name = request.form.get('name')
+        gender = request.form.get('gender')
+        nationality = request.form.get('nationality')
+        religion = request.form.get('religion')
+        fname = request.form.get('fname')
+        foccupation = request.form.get('f-occupation')
+        foffice = request.form.get('f-office-address')
+        femail = request.form.get('f-email')
+        fnum = request.form.get('f-num')
+        mname = request.form.get('m-name')
+        moccupation = request.form.get('m-occupation')
+        moffice = request.form.get('m-address')
+        memail = request.form.get('m-email')
+        mnum = request.form.get('m-number')
+        address = request.form.get('permanent-address')
+        bro_sis = request.form.get('bro-sis')
+
+        general_info = General(user_id=session['user_id'], name=name,
+                               gender=gender, nationality=nationality, religion=religion,
+                               fname=fname, foccupation=foccupation, foffice=foffice, femail=femail,
+                               fmobile=fnum, mname=mname, moccupation=moccupation, moffice=moffice,
+                               memail=memail, mmobile=mnum, permanent_address=address, bro_sis=bro_sis)
+        
+        to_be_deleted = General.query.filter_by(user_id=session['user_id']).first()
+        db.session.delete(to_be_deleted)
+        db.session.add(general_info)
+        db.session.commit()
+
+        return redirect("/general")
+    else:
+        general_info = General.query.filter_by(user_id=session["user_id"]).first()
+        return render_template("general-edit.html", general=general_info)
+
+
+
+@app.route("/dummy")
+def dummy():
+    test = None
+    return render_template("dummy.html", test=test)

@@ -4,175 +4,175 @@
 
 {% block body %}
 <main style="max-width: 1200px;" class="container ms-3">
-    <form action="/editform" method="post">
-        <div class="row gy-2">
-            <div class="col-12">
-                <div class="row">
-                    <div class="col-4">
-                        <label for="name" class="col-form-label">Name</label>
-                    </div>
-                    <div class="col">
-                        <input type="text" name="name" class="form-control" id="name">
-                    </div>
+    <div class="row gy-2">
+        <div class="col-12">
+            <div class="row">
+                <div class="col-4">
+                    <label for="name" class="col-form-label">Name</label>
                 </div>
-            </div>
-        
-            <div class="col-12">
-                <div class="row">
-                    <div class="col-4">
-                        <label for="gender" class="col-form-label">gender</label>
-                    </div>
-                    <div class="col">
-                        <input type="text" class="form-control" name="gender" id="gender">
-                    </div>
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="row">
-                    <div class="col-4">
-                        <label for="nationality" class="col-form-label">nationality</label>
-                    </div>
-                    <div class="col">
-                        <input type="text" class="form-control" name="gender" id="nationality">
-                    </div>
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="row">
-                    <div class="col-4">
-                        <label for="religion" class="col-form-label">religion</label>
-                    </div>
-                    <div class="col">
-                        <input type="text" class="form-control" name="religion" id="religion">
-                    </div>
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="row">
-                    <div class="col-4">
-                        <label for="f-name" class="col-form-label">father's name</label>
-                    </div>
-                    <div class="col">
-                        <input type="text" class="form-control" name="fname" id="f-name">
-                    </div>
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="row">
-                    <div class="col-4">
-                        <label for="f-occupation" class="col-form-label">occupation</label>
-                    </div>
-                    <div class="col">
-                        <input type="text" class="form-control" name="f-occupation" id="f-occupation">
-                    </div>
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="row">
-                    <div class="col-4">
-                        <label for="f-office-address" class="col-form-label">Office address</label>
-                    </div>
-                    <div class="col">
-                        <textarea type="text" class="form-control" name="f-office-address" id="f-office-address" rows="2"></textarea>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="row">
-                    <div class="col-4">
-                        <label for="f-email" class="col-form-label">email id</label>
-                    </div>
-                    <div class="col">
-                        <input type="email" class="form-control" name="f-email" id="f-email">
-                    </div>
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="row">
-                    <div class="col-4">
-                        <label for="f-num" class="col-form-label">mobile-number</label>
-                    </div>
-                    <div class="col">
-                        <input type="text" class="form-control" name="f-num" id="f-num">
-                    </div>
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="row">
-                    <div class="col-4">
-                        <label for="m-name" class="col-form-label">mother's name</label>
-                    </div>
-                    <div class="col">
-                        <input type="text" class="form-control" name="m-name" id="m-name">
-                    </div>
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="row">
-                    <div class="col-4">
-                        <label for="m-occupation" class="col-form-label">occupation</label>
-                    </div>
-                    <div class="col">
-                        <input type="text" class="form-control" name="m-occupation" id="m-occupation">
-                    </div>
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="row">
-                    <div class="col-4">
-                        <label for="m-address" class="col-form-label">office address</label>
-                    </div>
-                    <div class="col">
-                        <textarea type="text" class="form-control" id="m-address" name="m-address" rows="2"></textarea>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="row">
-                    <div class="col-4">
-                        <label for="m-email" class="col-form-label">email</label>
-                    </div>
-                    <div class="col">
-                        <input type="email" class="form-control" name="m-email" id="m-email">
-                    </div>
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="row">
-                    <div class="col-4">
-                        <label for="m-number" class="col-form-label">mobile number</label>
-                    </div>
-                    <div class="col">
-                        <input type="text" class="form-control" name="m-number" id="m-number">
-                    </div>
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="row">
-                    <div class="col-4">
-                        <label for="permanent-address" class="col-form-label">permanent address</label>
-                    </div>
-                    <div class="col">
-                        <textarea type="text" class="form-control" name="permanent-address" id="permanent-address" rows="2"></textarea>
-                    </div>
-                </div>
-            </div>
-            <div class="...">
-                <div class="row">
-                    <div class="col-12 col-md-4">
-                        <label for="bro-sis" class="col-form-label">How many Brothers and sisters do you have and what are they doing?</label>
-                    </div>
-                    <div class="col-12 col-md-8">
-                        <textarea type="text" class="form-control" name="bro-sis" id="bro-sis" rows="2"></textarea>
-                    </div>
+                <div class="col">
+                    <input type="text" name="name" class="form-control" id="name" readonly value="{{ general.name if general else '' }}">
                 </div>
             </div>
         </div>
-        <div class="col-12 d-flex justify-content-center">
-            <input class="btn btn-dark mt-3 d-md-none btn" type="submit" value="Submit">
-            <input class="btn btn-dark mt-3 d-none d-md-block btn-lg" type="submit" value="Submit">
+    
+        <div class="col-12">
+            <div class="row">
+                <div class="col-4">
+                    <label for="gender" class="col-form-label">gender</label>
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control" name="gender" id="gender" readonly value="{{ general.gender if general else '' }}">
+                </div>
+            </div>
         </div>
-    </form>
+        <div class="col-12">
+            <div class="row">
+                <div class="col-4">
+                    <label for="nationality" class="col-form-label">nationality</label>
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control" name="nationality" id="nationality" readonly value="{{ general.nationality if general else '' }}">
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="row">
+                <div class="col-4">
+                    <label for="religion" class="col-form-label">religion</label>
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control" name="religion" id="religion" readonly value="{{ general.religion if general else '' }}">
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="row">
+                <div class="col-4">
+                    <label for="f-name" class="col-form-label">father's name</label>
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control" name="fname" id="f-name" readonly value="{{ general.fname if general else '' }}">
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="row">
+                <div class="col-4">
+                    <label for="f-occupation" class="col-form-label">occupation</label>
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control" name="f-occupation" id="f-occupation" readonly value="{{ general.foccupation if general else '' }}">
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="row">
+                <div class="col-4">
+                    <label for="f-office-address" class="col-form-label">Office address</label>
+                </div>
+                <div class="col">
+                    <textarea type="text" class="form-control" name="f-office-address" id="f-office-address" rows="2" readonly>{{ general.foffice if general else '' }}</textarea>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="row">
+                <div class="col-4">
+                    <label for="f-email" class="col-form-label">email id</label>
+                </div>
+                <div class="col">
+                    <input type="email" class="form-control" name="f-email" id="f-email" readonly value="{{ general.femail if general else '' }}">
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="row">
+                <div class="col-4">
+                    <label for="f-num" class="col-form-label">mobile-number</label>
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control" name="f-num" id="f-num" readonly value="{{ general.fmobile if general else '' }}">
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="row">
+                <div class="col-4">
+                    <label for="m-name" class="col-form-label">mother's name</label>
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control" name="m-name" id="m-name" readonly value="{{ general.mname if general else '' }}">
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="row">
+                <div class="col-4">
+                    <label for="m-occupation" class="col-form-label">occupation</label>
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control" name="m-occupation" id="m-occupation" readonly value="{{ general.moccupation if general else '' }}">
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="row">
+                <div class="col-4">
+                    <label for="m-address" class="col-form-label">office address</label>
+                </div>
+                <div class="col">
+                    <textarea type="text" class="form-control" id="m-address" name="m-address" rows="2" readonly>{{ general.moffice if general else '' }}</textarea>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="row">
+                <div class="col-4">
+                    <label for="m-email" class="col-form-label">email</label>
+                </div>
+                <div class="col">
+                    <input type="email" class="form-control" name="m-email" id="m-email" readonly value="{{ general.memail if general else '' }}">
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="row">
+                <div class="col-4">
+                    <label for="m-number" class="col-form-label">mobile number</label>
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control" name="m-number" id="m-number" readonly value="{{ general.mmobile if general else '' }}">
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="row">
+                <div class="col-4">
+                    <label for="permanent-address" class="col-form-label">permanent address</label>
+                </div>
+                <div class="col">
+                    <textarea type="text" class="form-control" name="permanent-address" id="permanent-address" rows="2" readonly>{{ general.permanent_address if general else '' }}</textarea>
+                </div>
+            </div>
+        </div>
+        <div class="...">
+            <div class="row">
+                <div class="col-12 col-md-4">
+                    <label for="bro-sis" class="col-form-label">How many Brothers and sisters do you have and what are they doing?</label>
+                </div>
+                <div class="col-12 col-md-8">
+                    <textarea type="text" class="form-control" name="bro-sis" id="bro-sis" rows="2" readonly>{{ general.bro_sis if general else '' }}</textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 d-flex justify-content-center">
+        <form action="/general-edit" method="get">
+            <input class="btn btn-dark mt-3 d-md-none btn" type="submit" value="Edit">
+            <input class="btn btn-dark mt-3 d-none d-md-block btn-lg" type="submit" value="Edit">
+        </form>
+    </div>
 </main>
 {% endblock %}
 
