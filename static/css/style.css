@@ -1,0 +1,28 @@
+
+td textarea, td input {
+    width: 100%;
+    border: 1px solid rgb(233, 233, 233);
+}
+
+.subject {
+    min-width: 150px;
+}
+.sub-code {
+    min-width: 100px;
+}
+
+.small-num {
+    min-width: 65px;
+}
+
+.sno {
+    min-width: 25px;
+}
+
+.date {
+    min-width: 100px;  
+}
+
+.large-text {
+    min-width: 200px;
+}

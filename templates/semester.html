@@ -5,261 +5,202 @@
 
 {% block body %}
 <main class="d-flex flex-column ms-md-5 table-responsive g-3" style="max-width: 1200px;">
-  <h1 class="align-self-center">semester 1</h1>
-  <form action="/editform" method="post">
-    <div class="table-responsive ms-1 mt-3">
-      <!-- table for attendance -->
-      <div class="table-responsive">
-        <table class="table table-bordered table-sm mb-0">
-          <thead>
-              <tr>
-                  <th rowspan="2">#</th>
-                  <th rowspan="2">code</th>
-                  <th rowspan="2">subjects</th>
-                  <th colspan="3">1st month</th>
-                  <th colspan="3">2nd month</th>
-                  <th colspan="3">3rd month</th>
-              </tr>
-              <tr>
-                  <td>T</td>
-                  <td>A</td>
-                  <td>%</td>
-                  <td>T</td>
-                  <td>A</td>
-                  <td>%</td>
-                  <td>T</td>
-                  <td>A</td>
-                  <td>%</td>
-              </tr>
-          </thead>
-          <tbody id="attendanceTable">
+  <h1 class="align-self-center">semester {{ semester_number }}</h1>
+  <div class="table-responsive ms-1 mt-3">
+    <!-- table for attendance -->
+    <div class="table-responsive">
+      <table class="table table-bordered table-sm mb-0">
+        <thead>
             <tr>
-                <td><input type="text" name="attendance-row1-sno"></td>
-                <td><input type="text" name="attendance-row1-code"></td>
-                <td><input type="text" name="attendance-row1-subject"></td>
-                <td><input type="text" name="attendance-row1-T1"></td>
-                <td><input type="text" name="attendance-row1-A1"></td>
-                <td><input type="text" name="attendance-row1-P1"></td>
-                <td><input type="text" name="attendance-row1-T2"></td>
-                <td><input type="text" name="attendance-row1-A2"></td>
-                <td><input type="text" name="attendance-row1-P2"></td>
-                <td><input type="text" name="attendance-row1-T3"></td>
-                <td><input type="text" name="attendance-row1-A3"></td>
-                <td><input type="text" name="attendance-row1-P3"></td>
+                <th rowspan="2">#</th>
+                <th rowspan="2">code</th>
+                <th rowspan="2">subjects</th>
+                <th colspan="3">1st month</th>
+                <th colspan="3">2nd month</th>
+                <th colspan="3">3rd month</th>
             </tr>
-          </tbody>
+            <tr>
+                <td>T</td>
+                <td>A</td>
+                <td>%</td>
+                <td>T</td>
+                <td>A</td>
+                <td>%</td>
+                <td>T</td>
+                <td>A</td>
+                <td>%</td>
+            </tr>
+        </thead>
+        <tbody id="attendanceTable">
+          {% for record in attendance_records %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ record.code }}</td>
+                <td>{{ record.subject }}</td>
+                <td>{{ record.t1 }}</td>
+                <td>{{ record.a1 }}</td>
+                <td>TODO</td>
+                <td>{{ record.t2 }}</td>
+                <td>{{ record.t2 }}</td>
+                <td>TODO</td>
+                <td>{{ record.t3 }}</td>
+                <td>{{ record.a3 }}</td>
+                <td>TODO</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+    </table>
+    </div> 
+  </div>
+
+  <div class="table-responsive ms-1 mt-3">
+    <!-- table for iat -->
+    <div class="table-responsive">
+      <table class="table table-bordered table-sm mb-0">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>code</th>
+                <th>subjects</th>
+                <th>Max</th>
+                <th>iat-1</th>
+                <th>iat-2</th>
+                <th>iat-3</th>
+                <th>avg</th>
+            </tr>
+        </thead>
+        <tbody id="iatTable">
+          {% for record in iat_records %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ record.code }}</td>
+                <td>{{ record.subject }}</td>
+                <td>{{ record.max }}</td>
+                <td>{{ record.iat1 }}</td>
+                <td>{{ record.iat2 }}</td>
+                <td>{{ record.iat3 }}</td>
+                <td>TODO</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="table-responsive ms-1 mt-3">
+    <!-- table for events -->
+    <div class="table-responsive">
+      <table class="table table-bordered table-sm mb-0">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>club name</th>
+            <th>event title</th>
+            <th>event date</th>
+          </tr>
+        </thead>
+        <tbody id="eventsTable">
+          {% for record in event_records %}
+            <tr>
+              <td>{{ loop.index }}</td>
+              <td>{{ record.club_name }}</td>
+              <td>{{ record.event_title }}</td>
+              <td>{{ record.event_date }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
       </table>
-      </div>
-      <!-- add row button for attendance table  -->
-      <button type="button" class="btn btn-light btn-small d-flex align-items-center addBtn" id="attendanceAddBtn" data-for="attendanceTable" data-increement="iatTotalRows">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
-          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-          <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
-        </svg>
-        <span class="ms-1">
-          Add row
-        </span>
-      </button>
-      <!-- hidden counter for number of rows -->
-      <input type="number" aria-hidden="true" id="iatTotalRows" name="attendance-rows" class="d-none">
     </div>
-  
-    <div class="table-responsive ms-1 mt-3">
-      <!-- table for iat -->
-      <div class="table-responsive">
-        <table class="table table-bordered table-sm mb-0">
-          <thead>
-              <tr>
-                  <th>#</th>
-                  <th>code</th>
-                  <th>subjects</th>
-                  <th>Max</th>
-                  <th>iat-1</th>
-                  <th>iat-2</th>
-                  <th>iat-3</th>
-                  <th>avg</th>
-              </tr>
-          </thead>
-          <tbody id="iatTable">
+  </div>
+
+  <div class="table-responsive ms-1 mt-3">
+    <!-- table for MOOC -->
+    <div class="table-responsive">
+      <table class="table table-bordered table-sm mb-0">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Under</th>
+            <th>MOOC title</th>
+            <th>start date</th>
+            <th>completed date</th>
+            <th>score</th>
+          </tr>
+        </thead>
+        <tbody id="moocTable">
+          {% for record in mooc_records %}
             <tr>
-                <td><input type="text" name="iat-row1-sno"></td>
-                <td><input type="text" name="iat-row1-code"></td>
-                <td><input type="text" name="iat-row1-subject"></td>
-                <td><input type="text" name="iat-row1-max"></td>
-                <td><input type="text" name="iat-row1-iat1"></td>
-                <td><input type="text" name="iat-row1-iat2"></td>
-                <td><input type="text" name="iat-row1-iat3"></td>
-                <td><input type="text" name="iat-row1-avg"></td>
+              <td>{{ loop.index }}</td>
+              <td>{{ record.under }}</td>
+              <td>{{ record.title }}</td>
+              <td>{{ record.start_date }}</td>
+              <td>{{ record.completed_date }}</td>
+              <td>{{ record.score }}</td>
             </tr>
-          </tbody>
+          {% endfor %}
+        </tbody>
       </table>
-      </div>
-      <!-- add row button for iat table  -->
-      <button type="button" class="btn btn-light btn-small d-flex align-items-center addBtn" id="iatAddBtn" data-for="iatTable" data-increement="attendanceTotalRows">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
-          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-          <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
-        </svg>
-        <span class="ms-1">
-          Add row
-        </span>
-      </button>
-      <!-- hidden counter for number of rows -->
-      <input type="number" aria-hidden="true" id="attendanceTotalRows" name="iat-rows" class="d-none">
     </div>
-  
-    <div class="table-responsive ms-1 mt-3">
-      <!-- table for events -->
-      <div class="table-responsive">
-        <table class="table table-bordered table-sm mb-0">
-          <thead>
+  </div>
+
+  <div class="table-responsive ms-1 mt-3">
+    <!-- table for mini project -->
+    <div class="table-responsive">
+      <table class="table table-bordered table-sm mb-0">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Mini project title</th>
+            <th>Man hours</th>
+            <th>start date</th>
+            <th>completed date</th>
+          </tr>
+        </thead>
+        <tbody id="projectTable">
+          {% for record in project_records %}
             <tr>
-              <th>#</th>
-              <th>club name</th>
-              <th>event title</th>
-              <th>event date</th>
+              <td>{{ loop.index }}</td>
+              <td>{{ record.title }}</td>
+              <td>{{ record.man_hours }}</td>
+              <td>{{ record.start_date }}</td>
+              <td>{{ record.completed_date }}</td>  
             </tr>
-          </thead>
-          <tbody id="eventsTable">
-            <tr>
-              <td><input type="text" name="events-row1-sno"></td>
-              <td><input type="text" name="events-row1-name"></td>
-              <td><input type="textbox" name="events-row1-title"></td>
-              <td><input type="date" name="events-row1-date"></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <button type="button" class="btn btn-light btn-small d-flex align-items-center addBtn" id="eventsAddBtn" data-for="eventsTable" data-increement="eventsTotalRows">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
-          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-          <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
-        </svg>
-        <span class="ms-1">
-          Add row
-        </span>
-      </button>
-      <!-- hidden counter for number of rows -->
-      <input type="number" aria-hidden="true" id="eventsTotalRows" name="events-rows" class="d-none">
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
-  
-    <div class="table-responsive ms-1 mt-3">
-      <!-- table for MOOC -->
-      <div class="table-responsive">
-        <table class="table table-bordered table-sm mb-0">
-          <thead>
+  </div>
+
+
+  <div class="table-responsive ms-1 mt-3">
+    <!-- table for counselling records -->
+    <div class="table-responsive">
+      <table class="table table-bordered table-sm mb-0">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Date</th>
+            <th>counselling records</th>
+          </tr>
+        </thead>
+        <tbody id="counsellingTable">
+          {% for record in counselling_records %}
             <tr>
-              <th>#</th>
-              <th>Under</th>
-              <th>MOOC title</th>
-              <th>start date</th>
-              <th>completed date</th>
-              <th>score</th>
+              <td>{{ loop.index }}</td>
+              <td>{{ record.date }}</td>
+              <td>{{ record.record }}</td>
             </tr>
-          </thead>
-          <tbody id="moocTable">
-            <tr>
-              <td><input type="text" name="mooc-row1-sno"></td>
-              <td><input type="text" name="mooc-row1-under"></td>
-              <td><input type="text" name="mooc-row1-title"></td>
-              <td><input type="text" name="mooc-row1-start"></td>
-              <td><input type="text" name="mooc-row1-completed"></td>
-              <td><input type="text" name="mooc-row1-score"></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <!-- button for adding rows -->
-      <button type="button" class="btn btn-light btn-small d-flex align-items-center addBtn" id="moocAddBtn" data-for="moocTable" data-increement="moocTotalRows">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
-          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-          <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
-        </svg>
-        <span class="ms-1">
-          Add row
-        </span>
-      </button>
-      <!-- hidden counter for number of rows -->
-      <input type="number" aria-hidden="true" id="moocTotalRows" name="mooc-rows" class="d-none">
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
-  
-    <div class="table-responsive ms-1 mt-3">
-      <!-- table for mini project -->
-      <div class="table-responsive">
-        <table class="table table-bordered table-sm mb-0">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Mini project title</th>
-              <th>Man hours</th>
-              <th>start date</th>
-              <th>completed date</th>
-            </tr>
-          </thead>
-          <tbody id="projectTable">
-            <tr>
-              <td><input type="text" name="project-row1-sno"></td>
-              <td><input type="text" name="project-row1-title"></td>
-              <td><input type="text" name="project-row1-hours"></td>
-              <td><input type="text" name="project-row1-start"></td>
-              <td><input type="text" name="project-row1-completed"></td>  
-            </tr>
-          </tbody>
-        </table>
-      </div>
-       <!-- button for adding rows -->
-       <button type="button" class="btn btn-light btn-small d-flex align-items-center addBtn" id="projectAddBtn" data-for="projectTable" data-increement="projectTotalRows">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
-          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-          <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
-        </svg>
-        <span class="ms-1">
-          Add row
-        </span>
-      </button>
-      <!-- hidden counter for number of rows -->
-      <input type="number" aria-hidden="true" id="projectTotalRows" name="project-rows" class="d-none">
-    </div>
-  
-  
-    <div class="table-responsive ms-1 mt-3">
-      <!-- table for counselling records -->
-      <div class="table-responsive">
-        <table class="table table-bordered table-sm mb-0">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Date</th>
-              <th>counselling records</th>
-            </tr>
-          </thead>
-          <tbody id="counsellingTable">
-            <tr>
-              <td><input type="text" name="counselling-row1-sno"></td>
-              <td><input type="text" name="counselling-row2-date"></td>
-              <td><input type="text" name="counselling-row3-record"></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <!-- button for adding rows -->
-      <button type="button" class="btn btn-light btn-small d-flex align-items-center addBtn" id="counsellingAddBtn" data-for="counsellingTable" data-increement="counsellingTotalRows">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
-          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-          <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
-        </svg>
-        <span class="ms-1">
-          Add row
-        </span>
-      </button>
-      <!-- hidden counter for number of rows -->
-      <input type="number" aria-hidden="true" id="counsellingTotalRows" name="counselling-rows" class="d-none">
-    </div>
-    <div class="col-12 d-flex justify-content-center">
-      <input class="btn btn-dark mt-3 d-md-none btn" type="submit" value="Submit">
-      <input class="btn btn-dark mt-3 d-none d-md-block btn-lg" type="submit" value="Submit">
-    </div>
-  </form>
+  </div>
+  <div class="col-12 d-flex justify-content-center">
+    <form action="/semester{{ semester_number }}-edit">
+      <input class="btn btn-dark mt-3 d-md-none btn" type="submit" value="edit">
+      <input class="btn btn-dark mt-3 d-none d-md-block btn-lg" type="submit" value="edit">
+    </form>
+  </div>
 </main>
 
 {% endblock %}

@@ -1,0 +1,349 @@
+{% extends "layout.html" %}
+
+{% block title %} semester-edit {% endblock %}
+
+
+{% block body %}
+<main class="d-flex flex-column ms-md-5 table-responsive g-3" style="max-width: 1200px;">
+  <h1 class="align-self-center">semester 1</h1>
+  <form action="{{ request.path }}" method="post">
+    <div class="table-responsive ms-1 mt-3">
+      <!-- table for attendance -->
+      <div class="table-responsive">
+        <table class="table table-bordered table-sm mb-0">
+          <thead>
+              <tr>
+                  <th rowspan="2" class="sno">#</th>
+                  <th rowspan="2" class="sub-code">code</th>
+                  <th rowspan="2" class="subject">subjects</th>
+                  <th colspan="3">1st month</th>
+                  <th colspan="3">2nd month</th>
+                  <th colspan="3">3rd month</th>
+              </tr>
+              <tr>
+                  <td class="small-num">T</td>
+                  <td class="small-num">A</td>
+                  <td class="small-num">%</td>
+                  <td class="small-num">T</td>
+                  <td class="small-num">A</td>
+                  <td class="small-num">%</td>
+                  <td class="small-num">T</td>
+                  <td class="small-num">A</td>
+                  <td class="small-num">%</td>
+              </tr>
+          </thead>
+          <tbody id="attendanceTable">
+            {% if attendance_records %}
+                {% for record in attendance_records %}
+                    <tr>
+                        <td class="sno">{{ loop.index }}</td>
+                        <td class="sub-code"><input type="text" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1"></td>
+                        <td class="subject"><input type="text" name="attendance-row{{ loop.index }}-subject" value="{{ record.subject }}"></td>
+                        <td class="small-num"><input type="text" name="attendance-row{{ loop.index }}-T1" value="{{ record.t1 }}"></td>
+                        <td class="small-num"><input type="text" name="attendance-row{{ loop.index }}-A1" value="{{ record.a1 }}"></td>
+                        <td class="small-num"><input type="text" name="attendance-row{{ loop.index }}-P1"></td>
+                        <td class="small-num"><input type="text" name="attendance-row{{ loop.index }}-T2" value="{{ record.t2 }}"></td>
+                        <td class="small-num"><input type="text" name="attendance-row{{ loop.index }}-A2" value="{{ record.a2 }}"></td>
+                        <td class="small-num"><input type="text" name="attendance-row{{ loop.index }}-P2"></td>
+                        <td class="small-num"><input type="text" name="attendance-row{{ loop.index }}-T3" value="{{ record.t3 }}"></td>
+                        <td class="small-num"><input type="text" name="attendance-row{{ loop.index }}-A3" value="{{ record.a3 }}"></td>
+                        <td class="small-num"><input type="text" name="attendance-row{{ loop.index }}-P3"></td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td class="sno">1</td>
+                    <td class="sub-code"><input type="text" name="attendance-row1-code"></td>
+                    <td class="subject"><input type="text" name="attendance-row1-subject"></td>
+                    <td class="small-num"><input type="text" name="attendance-row1-T1"></td>
+                    <td class="small-num"><input type="text" name="attendance-row1-A1"></td>
+                    <td class="small-num"><input type="text" name="attendance-row1-P1"></td>
+                    <td class="small-num"><input type="text" name="attendance-row1-T2"></td>
+                    <td class="small-num"><input type="text" name="attendance-row1-A2"></td>
+                    <td class="small-num"><input type="text" name="attendance-row1-P2"></td>
+                    <td class="small-num"><input type="text" name="attendance-row1-T3"></td>
+                    <td class="small-num"><input type="text" name="attendance-row1-A3"></td>
+                    <td class="small-num"><input type="text" name="attendance-row1-P3"></td>
+                </tr>
+            {% endif %}
+            </tbody>
+      </table>
+      </div>
+      <!-- add row button for attendance table  -->
+      <button type="button" class="btn btn-light btn-small d-flex align-items-center addBtn" id="attendanceAddBtn" data-for="attendanceTable" data-increement="iatTotalRows">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+          <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+        </svg>
+        <span class="ms-1">
+          Add row
+        </span>
+      </button>
+      <!-- hidden counter for number of rows -->
+      <input type="number" aria-hidden="true" id="attendanceTotalRows" name="attendance-rows" class="d-none">
+    </div>
+  
+    <div class="table-responsive ms-1 mt-3">
+      <!-- table for iat -->
+      <div class="table-responsive">
+        <table class="table table-bordered table-sm mb-0">
+          <thead>
+              <tr>
+                  <th class="sno">#</th>
+                  <th class="sub-code">code</th>
+                  <th class="subject">subjects</th>
+                  <th class="small-num">Max</th>
+                  <th class="small-num">iat-1</th>
+                  <th class="small-num">iat-2</th>
+                  <th class="small-num">iat-3</th>
+                  <th class="small-num">avg</th>
+              </tr>
+          </thead>
+          <tbody id="iatTable">
+            {% if iat_records %}
+                {% for record in iat_records %}
+                    <tr>
+                        <td class="sno">{{ loop.index }}</td>
+                        <td class="sub-code"><input type="text" name="iat-row{{ loop.index }}-code" value="{{ record.code }}"></td>
+                        <td class="subject"><input type="text" name="iat-row{{ loop.index }}-subject" value="{{ record.subject }}"></td>
+                        <td class="small-num"><input type="text" name="iat-row{{ loop.index }}-max" value="{{ record.max }}"></td>
+                        <td class="small-num"><input type="text" name="iat-row{{ loop.index }}-iat1" value="{{ record.iat1 }}"></td>
+                        <td class="small-num"><input type="text" name="iat-row{{ loop.index }}-iat2" value="{{ record.iat2 }}"></td>
+                        <td class="small-num"><input type="text" name="iat-row{{ loop.index }}-iat3" value="{{ record.iat3 }}"></td>
+                        <td class="small-num"><input type="text" name="iat-row{{ loop.index }}-avg"></td>
+                    </tr>
+                {% endfor %}
+            {%else%}
+                <tr>
+                    <td class="sno">1</td>
+                    <td class="sub-code"><input type="text" name="iat-row1-code"></td>
+                    <td class="subject"><input type="text" name="iat-row1-subject"></td>
+                    <td class="small-num"><input type="text" name="iat-row1-max"></td>
+                    <td class="small-num"><input type="text" name="iat-row1-iat1"></td>
+                    <td class="small-num"><input type="text" name="iat-row1-iat2"></td>
+                    <td class="small-num"><input type="text" name="iat-row1-iat3"></td>
+                    <td class="small-num"><input type="text" name="iat-row1-avg"></td>
+                </tr>
+            {% endif %}   
+          </tbody>
+      </table>
+      </div>
+      <!-- add row button for iat table  -->
+      <button type="button" class="btn btn-light btn-small d-flex align-items-center addBtn" id="iatAddBtn" data-for="iatTable" data-increement="attendanceTotalRows">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+          <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+        </svg>
+        <span class="ms-1">
+          Add row
+        </span>
+      </button>
+      <!-- hidden counter for number of rows -->
+      <input type="number" aria-hidden="true" id="iatTotalRows" name="iat-rows" class="d-none">
+    </div>
+  
+    <div class="table-responsive ms-1 mt-3">
+      <!-- table for events -->
+      <div class="table-responsive">
+        <table class="table table-bordered table-sm mb-0">
+          <thead>
+            <tr>
+              <th class="sno">#</th>
+              <th class="large-text">club name</th>
+              <th class="large-text">event title</th>
+              <th class="date">event date</th>
+            </tr>
+          </thead>
+          <tbody id="eventsTable">
+            {% if event_records %}
+                {% for record in event_records %}
+                    <tr>
+                        <td class="sno">{{ loop.index }}></td>
+                        <td class="large-text"><input type="text" name="events-row{{ loop.index }}-name" value="{{ record.club_name }}"></td>
+                        <td class="large-text"><input type="textbox" name="events-row{{ loop.index }}-title" value="{{ record.event_title }}"></td>
+                        <td class="date"><input type="date" name="events-row{{ loop.index }}-date" value="{{ record.event_date }}"></td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td class="sno">1</td>
+                    <td class="large-text"><input type="text" name="events-row1-name"></td>
+                    <td class="large-text"><input type="textbox" name="events-row1-title"></td>
+                    <td class="date"><input type="date" name="events-row1-date"></td>
+                </tr>
+            {% endif %} 
+          </tbody>
+        </table>
+      </div>
+      <button type="button" class="btn btn-light btn-small d-flex align-items-center addBtn" id="eventsAddBtn" data-for="eventsTable" data-increement="eventsTotalRows">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+          <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+        </svg>
+        <span class="ms-1">
+          Add row
+        </span>
+      </button>
+      <!-- hidden counter for number of rows -->
+      <input type="number" aria-hidden="true" id="eventsTotalRows" name="events-rows" class="d-none">
+    </div>
+  
+    <div class="table-responsive ms-1 mt-3">
+      <!-- table for MOOC -->
+      <div class="table-responsive">
+        <table class="table table-bordered table-sm mb-0">
+          <thead>
+            <tr>
+              <th class="sno">#</th>
+              <th class="large-text">Under</th>
+              <th class="large-text">MOOC title</th>
+              <th class="date">start date</th>
+              <th class="date">completed date</th>
+              <th class="small-num">score</th>
+            </tr>
+          </thead>
+          <tbody id="moocTable">
+            {% if mooc_records %}
+                {% for record in mooc_records %}
+                    <tr>
+                        <td class="sno">{{ loop.index }}</td>
+                        <td class="large-text"><input type="text" name="mooc-row{{ loop.index }}-under" value="{{ record.under }}"></td>
+                        <td class="large-text"><input type="text" name="mooc-row{{ loop.index }}-title" value="{{ record.title }}"></td>
+                        <td class="date"><input type="text" name="mooc-row{{ loop.index }}-start" value="{{ record.start_date }}"></td>
+                        <td class="date"><input type="text" name="mooc-row{{ loop.index }}-completed" value="{{ record.completed_date }}"></td>
+                        <td class="small-num"><input type="text" name="mooc-row{{ loop.index }}-score" value="{{ record.score }}"></td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td class="sno">1</td>
+                    <td class="large-text"><input type="text" name="mooc-row1-under"></td>
+                    <td class="large-text"><input type="text" name="mooc-row1-title"></td>
+                    <td class="date"><input type="text" name="mooc-row1-start"></td>
+                    <td class="date"><input type="text" name="mooc-row1-completed"></td>
+                    <td class="small-num"><input type="text" name="mooc-row1-score"></td>
+                </tr>
+            {% endif %}
+
+          </tbody>
+        </table>
+      </div>
+      <!-- button for adding rows -->
+      <button type="button" class="btn btn-light btn-small d-flex align-items-center addBtn" id="moocAddBtn" data-for="moocTable" data-increement="moocTotalRows">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+          <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+        </svg>
+        <span class="ms-1">
+          Add row
+        </span>
+      </button>
+      <!-- hidden counter for number of rows -->
+      <input type="number" aria-hidden="true" id="moocTotalRows" name="mooc-rows" class="d-none">
+    </div>
+  
+    <div class="table-responsive ms-1 mt-3">
+      <!-- table for mini project -->
+      <div class="table-responsive">
+        <table class="table table-bordered table-sm mb-0">
+          <thead>
+            <tr>
+              <th class="sno">#</th>
+              <th class="large-text">Mini project title</th>
+              <th class="small-num">Man hours</th>
+              <th class="date">start date</th>
+              <th class="date">completed date</th>
+            </tr>
+          </thead>
+          <tbody id="projectTable">
+            {% if project_records %}
+                {% for record in project_records %}
+                    <tr>
+                        <td class="sno">{{ loop.index }}></td>
+                        <td class="large-text"><input type="text" name="project-row{{ loop.index }}-title" value="{{ record.title }}"></td>
+                        <td class="small-num"><input type="text" name="project-row{{ loop.index }}-hours" value="{{ record.man_hours }}"></td>
+                        <td class="date"><input type="text" name="project-row{{ loop.index }}-start" value="{{ record.start_date }}"></td>
+                        <td class="date"><input type="text" name="project-row{{ loop.index }}-completed" value="{{ record.completed_date }}"></td>  
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td class="sno">1</td>
+                    <td class="large-text"><input type="text" name="project-row1-title"></td>
+                    <td class="small-num"><input type="text" name="project-row1-hours"></td>
+                    <td class="date"><input type="text" name="project-row1-start"></td>
+                    <td class=date><input type="text" name="project-row1-completed"></td>  
+                </tr>
+            {% endif %}
+          </tbody>
+        </table>
+      </div>
+       <!-- button for adding rows -->
+       <button type="button" class="btn btn-light btn-small d-flex align-items-center addBtn" id="projectAddBtn" data-for="projectTable" data-increement="projectTotalRows">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+          <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+        </svg>
+        <span class="ms-1">
+          Add row
+        </span>
+      </button>
+      <!-- hidden counter for number of rows -->
+      <input type="number" aria-hidden="true" id="projectTotalRows" name="project-rows" class="d-none">
+    </div>
+  
+  
+    <div class="table-responsive ms-1 mt-3">
+      <!-- table for counselling records -->
+      <div class="table-responsive">
+        <table class="table table-bordered table-sm mb-0">
+          <thead>
+            <tr>
+              <th class="sno">#</th>
+              <th class="date">Date</th>
+              <th class="large-text">counselling records</th>
+            </tr>
+          </thead>
+          <tbody id="counsellingTable">
+            {% if counselling_records %}
+                {% for record in counselling_records %}
+                    <tr>
+                        <td class="sno">{{ loop.index }}</td>
+                        <td class="date"><input type="text" name="counselling-row{{ loop.index }}-date" value="{{ record.date }}"></td>
+                        <td class="large-text"><textarea name="counselling-row{{ loop.index }}-record">{{ record.record }}</textarea></td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td class="sno">1</td>
+                    <td class="date"><input type="text" name="counselling-row1-date"></td>
+                    <td class="large-text"><textarea name="counselling-row1-record"></textarea></td>
+                </tr>
+            {% endif %}
+          </tbody>
+        </table>
+      </div>
+      <!-- button for adding rows -->
+      <button type="button" class="btn btn-light btn-small d-flex align-items-center addBtn" id="counsellingAddBtn" data-for="counsellingTable" data-increement="counsellingTotalRows">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+          <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+        </svg>
+        <span class="ms-1">
+          Add row
+        </span>
+      </button>
+      <!-- hidden counter for number of rows -->
+      <input type="number" aria-hidden="true" id="counsellingTotalRows" name="counselling-rows" class="d-none">
+    </div>
+    <div class="col-12 d-flex justify-content-center">
+      <input class="btn btn-dark mt-3 d-md-none btn" type="submit" value="Submit">
+      <input class="btn btn-dark mt-3 d-none d-md-block btn-lg" type="submit" value="Submit">
+    </div>
+  </form>
+</main>
+
+{% endblock %}
+
+
+

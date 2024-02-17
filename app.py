@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, session
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -132,6 +133,9 @@ class Counselling(db.Model):
     record = db.Column(db.String(300))
     semester = db.Column(db.Integer)
 
+    def __repr__(self):
+        return f"{self.record}"
+
 
 
 
@@ -184,9 +188,6 @@ def general():
         pass
     else:
         general_info = General.query.filter_by(user_id=session["user_id"]).first()
-        print("*" * 10)
-        print(general_info)
-        print("*" * 10)
         return render_template("general.html", general=general_info)
 
 
@@ -194,15 +195,178 @@ def general():
 def semester(semester_number):
 
     if request.method == 'POST':
-        #TODO
         pass
     else:
-        return render_template("semester.html")
+        attendance_records = Attendance.query.filter_by(user_id=session['user_id'], semester=semester_number).all()
+        iat_records = Iat.query.filter_by(user_id=session['user_id'], semester=semester_number).all()
+        event_records = Event.query.filter_by(user_id=session['user_id'], semester=semester_number).all()
+        mooc_records = Mooc.query.filter_by(user_id=session['user_id'], semester=semester_number).all()
+        project_records = Project.query.filter_by(user_id=session['user_id'], semester=semester_number).all()
+        counselling_records = Counselling.query.filter_by(user_id=session['user_id'], semester=semester_number).all()
+        
+        return render_template("semester.html", 
+                               semester_number=semester_number,
+                               attendance_records=attendance_records,
+                               iat_records=iat_records,
+                               event_records=event_records,
+                               mooc_records=mooc_records,
+                               project_records=project_records,
+                               counselling_records=counselling_records)
     
 
 
+
+@app.route("/semester<int:semester_number>-edit", methods=['GET', 'POST'])
+def edit_semester(semester_number):
+    if request.method == 'POST':
+        attendance_rows = int(request.form.get('attendance-rows'))
+        iat_rows = int(request.form.get('iat-rows'))
+        event_rows = int(request.form.get('events-rows'))
+        mooc_rows = int(request.form.get('mooc-rows'))
+        project_rows = int(request.form.get('project-rows'))
+        counselling_rows = int(request.form.get('counselling-rows'))
+
+
+        prev_attendance = Attendance.query.filter_by(user_id=session['user_id'], semester=semester_number).all()
+        if prev_attendance:
+            for rec in prev_attendance:
+                db.session.delete(rec)
+
+
+        prev_iat = Iat.query.filter_by(user_id=session['user_id'], semester=semester_number).all()
+        if prev_iat:
+            for rec in prev_iat:
+                db.session.delete(rec)
+
+        
+        prev_event = Event.query.filter_by(user_id=session['user_id'], semester=semester_number).all()
+        if prev_event:
+            for rec in prev_event:
+                db.session.delete(rec)
+
+
+        prev_mooc = Mooc.query.filter_by(user_id=session['user_id'], semester=semester_number).all()
+        if prev_mooc:
+            for rec in prev_mooc:
+                db.session.delete(rec)
+
+        
+        prev_project = Project.query.filter_by(user_id=session['user_id'], semester=semester_number).all()
+        if prev_project:
+            for rec in prev_project:
+                db.session.delete(rec)
+
+
+        prev_counselling = Counselling.query.filter_by(user_id=session['user_id'], semester=semester_number).all()
+        if prev_counselling:
+            for rec in prev_counselling:
+                db.session.delete(rec)
+
+
+        db.session.commit()
+
+        # for i in range(attendance_rows):
+        #     code = request.form.get(f"attendance-row{i + 1}-code")
+        #     subject = request.form.get(f"attendance-row{i + 1}-subject")
+        #     t1 = request.form.get(f"attendance-row{i + 1}-T1")
+        #     a1 = request.form.get(f"attendance-row{i + 1}-A1")
+        #     t2 = request.form.get(f"attendance-row{i + 1}-T2")
+        #     a2 = request.form.get(f"attendance-row{i + 1}-A2")
+        #     t3 = request.form.get(f"attendance-row{i + 1}-T3")
+        #     a3 = request.form.get(f"attendance-row{i + 1}-A3")
+
+        #     record = Attendance(user_id=session['user_id'], code=code,
+        #                         subject=subject, t1=t1, a1=a1, t2=t2, a2=a2, 
+        #                         t3=t3, a3=a3, semester=semester_number)
+            
+        #     db.session.add(record)
+
+
+
+        # for i in range(iat_rows):
+        #     code = request.form.get(f"iat-row{i + 1}-code")
+        #     subject = request.form.get(f"iat-row{i + 1}-subject")
+        #     max = request.form.get(f"iat-row{i + 1}-max")
+        #     iat1 = request.form.get(f"iat-row{i + 1}-iat1")
+        #     iat2 = request.form.get(f"iat-row{i + 1}-iat2")
+        #     iat3 = request.form.get(f"iat-row{i + 1}-iat3")
+
+        #     record = Iat(user_id=session['user_id'], code=code, subject=subject,
+        #                  max=max, iat1=iat1, iat2=iat2, iat3=iat3, semester=semester_number)
+            
+        #     db.session.add(record)
+
+
+        # for i in range(event_rows):
+        #     name = request.form.get(f"events-row{i + 1}-name")
+        #     title = request.form.get(f"events-row{i + 1}-title")
+        #     date = request.form.get(f"events-row{i + 1}-date")
+
+        #     record = Event(user_id=session['user_id'], club_name=name, 
+        #                    event_title=title, event_date=date, semester=semester_number)
+            
+        #     db.session.add(record)
+
+        # for i in range(mooc_rows):
+        #     under = request.form.get(f"mooc-row{i + 1}-under")
+        #     title = request.form.get(f"mooc-row{i + 1}-title")
+        #     start = request.form.get(f"mooc-row{i + 1}-start")
+        #     completed = request.form.get(f"mooc-row{i + 1}-completed")
+        #     score = request.form.get(f"mooc-row{i + 1}-score")
+
+        #     record = Mooc(user_id=session['user_id'], under=under, title=title, 
+        #                   start_date=start, completed_date=completed,
+        #                     score=score, semester=semester_number)
+
+        #     db.session.add(record)
+
+
+        # for i in range(project_rows):
+        #     title = request.form.get(f"project-row{i + 1}-title")
+        #     hours = request.form.get(f"project-row{i + 1}-hours")
+        #     start = request.form.get(f"project-row{i + 1}-start")
+        #     completed = request.form.get(f"project-row{i + 1}-completed")
+
+        #     record = Project(user_id=session['user_id'], title=title, man_hours=hours,
+        #                      start_date=start, completed_date=completed, semester=semester_number)
+            
+        #     db.session.add(record)
+
+        for i in range(counselling_rows):
+            date = datetime.strptime(request.form.get(f"counselling-row{i + 1}-date"), "%Y-%m-%d").date()
+            record = request.form.get(f"counselling-row{i + 1}-record")
+
+            row = Counselling(user_id=session['user_id'], date=date, record=record, semester=semester_number)
+
+            db.session.add(row)
+
+        db.session.commit()
+
+        return redirect(f"/semester{semester_number}")
+
+    else:
+        attendance_records = Attendance.query.filter_by(user_id=session['user_id'], semester=semester_number).all()
+        iat_records = Iat.query.filter_by(user_id=session['user_id'], semester=semester_number).all()
+        event_records = Event.query.filter_by(user_id=session['user_id'], semester=semester_number).all()
+        mooc_records = Mooc.query.filter_by(user_id=session['user_id'], semester=semester_number).all()
+        project_records = Project.query.filter_by(user_id=session['user_id'], semester=semester_number).all()
+        counselling_records = Counselling.query.filter_by(user_id=session['user_id'], semester=semester_number).all()
+        
+        return render_template("semester-edit.html", 
+                               attendance_records=attendance_records,
+                               iat_records=iat_records,
+                               event_records=event_records,
+                               mooc_records=mooc_records,
+                               project_records=project_records,
+                               counselling_records=counselling_records)
+
+
+
+
+
+
 @app.route("/general-edit", methods=['GET', 'POST'])
-def edit():
+def edit_general():
     if request.method == 'POST':
         name = request.form.get('name')
         gender = request.form.get('gender')
@@ -227,8 +391,11 @@ def edit():
                                fmobile=fnum, mname=mname, moccupation=moccupation, moffice=moffice,
                                memail=memail, mmobile=mnum, permanent_address=address, bro_sis=bro_sis)
         
+        #delete existing record
         to_be_deleted = General.query.filter_by(user_id=session['user_id']).first()
         db.session.delete(to_be_deleted)
+
+        #add new record
         db.session.add(general_info)
         db.session.commit()
 
@@ -238,8 +405,14 @@ def edit():
         return render_template("general-edit.html", general=general_info)
 
 
-
-@app.route("/dummy")
+@app.route("/dummy", methods=['GET', 'POST'])
 def dummy():
-    test = None
-    return render_template("dummy.html", test=test)
+    if request.method == 'POST':
+        print("*"*10)
+        print(request.form.get('myname'))
+        print("*"*10)
+        return 'check terminal'
+    else:
+        return render_template("dummy.html")
+
+        
