@@ -4,12 +4,32 @@
 
 
 {% block body %}
-<main class="d-flex flex-column ms-md-5 table-responsive g-3" style="max-width: 1200px;">
-  <h1 class="align-self-center">semester {{ semester_number }}</h1>
+<main class="d-flex flex-column ms-md-5 table-responsive g-3 container">
+  <div class="d-flex align-items-center justify-content-around ms-0 p-2">
+    <h1 class="mb-0 sem-heading">semester {{ semester_number }}</h1>
+    <form action="/semester{{ semester_number }}-edit">
+      <button type="submit" class="btn btn-dark d-md-none btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+          <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+          <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+        </svg>
+        EDIT
+      </button>
+      <button type="submit" class="btn btn-dark d-none d-md-block btn-lg">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+          <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+          <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+        </svg>
+        EDIT
+      </button>
+    </form>
+  </div>
+  <hr>
   <div class="table-responsive ms-1 mt-3">
     <!-- table for attendance -->
+    <p class="table-headings">attendance</p>
     <div class="table-responsive">
-      <table class="table table-bordered table-sm mb-0">
+      <table class="table table-bordered mb-0">
         <thead>
             <tr>
                 <th rowspan="2">#</th>
@@ -20,34 +40,40 @@
                 <th colspan="3">3rd month</th>
             </tr>
             <tr>
-                <td>T</td>
-                <td>A</td>
-                <td>%</td>
-                <td>T</td>
-                <td>A</td>
-                <td>%</td>
-                <td>T</td>
-                <td>A</td>
-                <td>%</td>
+                <th>T</th>
+                <th>A</th>
+                <th>%</th>
+                <th>T</th>
+                <th>A</th>
+                <th>%</th>
+                <th>T</th>
+                <th>A</th>
+                <th>%</th>
             </tr>
         </thead>
         <tbody id="attendanceTable">
-          {% for record in attendance_records %}
-            <tr>
-                <td>{{ loop.index }}</td>
-                <td>{{ record.code }}</td>
-                <td>{{ record.subject }}</td>
-                <td>{{ record.t1 }}</td>
-                <td>{{ record.a1 }}</td>
-                <td>TODO</td>
-                <td>{{ record.t2 }}</td>
-                <td>{{ record.t2 }}</td>
-                <td>TODO</td>
-                <td>{{ record.t3 }}</td>
-                <td>{{ record.a3 }}</td>
-                <td>TODO</td>
-            </tr>
-          {% endfor %}
+          {% if attendance_records %}
+            {% for record in attendance_records %}
+              <tr>
+                  <td>{{ loop.index}}</td>
+                  <td>{{ record.code if record.code else "" }}</td>
+                  <td>{{ record.subject if record.subject else "" }}</td>
+                  <td>{{ record.t1 if record.t1 else "" }}</td>
+                  <td>{{ record.a1 if record.a1 else "" }}</td>
+                  <td>{{ ((record.a1 / record.t1) * 100)|round(2) if record.a1 and record.t1 else '' }}</td>
+                  <td>{{ record.t2 if record.t2 else "" }}</td>
+                  <td>{{ record.a2 if record.a2 else "" }}</td>
+                  <td>{{ ((record.a2/ record.t2) * 100)|round(2) if record.a2 and record.t2 else '' }}</td>
+                  <td>{{ record.t3 if record.t3 else "" }}</td>
+                  <td>{{ record.a3 if record.a3 else "" }}</td>
+                  <td>{{ ((record.a3/record.t3) * 100)|round(2) if record.a3 and record.t3 else '' }}</td>
+              </tr>
+            {% endfor %}
+          {% else %}
+              <tr>
+                <td colspan="100" style="color: #f73b3b;">No records found</td>
+              </tr>
+          {% endif %}
         </tbody>
     </table>
     </div> 
@@ -55,8 +81,9 @@
 
   <div class="table-responsive ms-1 mt-3">
     <!-- table for iat -->
+    <p class="table-headings">IAT</p>
     <div class="table-responsive">
-      <table class="table table-bordered table-sm mb-0">
+      <table class="table table-bordered mb-0">
         <thead>
             <tr>
                 <th>#</th>
@@ -70,18 +97,24 @@
             </tr>
         </thead>
         <tbody id="iatTable">
-          {% for record in iat_records %}
-            <tr>
-                <td>{{ loop.index }}</td>
-                <td>{{ record.code }}</td>
-                <td>{{ record.subject }}</td>
-                <td>{{ record.max }}</td>
-                <td>{{ record.iat1 }}</td>
-                <td>{{ record.iat2 }}</td>
-                <td>{{ record.iat3 }}</td>
-                <td>TODO</td>
-            </tr>
-          {% endfor %}
+          {% if iat_records %}
+            {% for record in iat_records %}
+              <tr>
+                  <td>{{ loop.index }}</td>
+                  <td>{{ record.code if record.code else "" }}</td>
+                  <td>{{ record.subject if record.subject else "" }}</td>
+                  <td>{{ record.max if record.max else "" }}</td>
+                  <td>{{ record.iat1 if record.iat1 else "" }}</td>
+                  <td>{{ record.iat2 if record.iat2 else "" }}</td>
+                  <td>{{ record.iat3 if record.iat3 else "" }}</td>
+                  <td>{{ (((record.iat1 + record.iat2 + record.iat3) / 3)|round(2))  if record.iat1 and record.iat2 and record.iat3 else "" }}</td>
+              </tr>
+            {% endfor %}
+          {% else %}
+              <tr>
+                <td style="color: #f73b3b" colspan="100">no records found</td>
+              </tr>
+          {% endif %}
         </tbody>
     </table>
     </div>
@@ -89,8 +122,9 @@
 
   <div class="table-responsive ms-1 mt-3">
     <!-- table for events -->
+    <p class="table-headings">events</p>
     <div class="table-responsive">
-      <table class="table table-bordered table-sm mb-0">
+      <table class="table table-bordered mb-0">
         <thead>
           <tr>
             <th>#</th>
@@ -100,14 +134,20 @@
           </tr>
         </thead>
         <tbody id="eventsTable">
-          {% for record in event_records %}
-            <tr>
-              <td>{{ loop.index }}</td>
-              <td>{{ record.club_name }}</td>
-              <td>{{ record.event_title }}</td>
-              <td>{{ record.event_date }}</td>
-            </tr>
-          {% endfor %}
+          {% if event_records %}
+            {% for record in event_records %}
+              <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ record.club_name if record.club_name else "" }}</td>
+                <td>{{ record.event_title if record.event_title else "" }}</td>
+                <td>{{ record.event_date if record.event_date else "" }}</td>
+              </tr>
+            {% endfor %}
+          {% else %}
+              <tr>
+                <td style="color:#f73b3b;" colspan="100">No records found</td>
+              </tr>
+          {% endif %}
         </tbody>
       </table>
     </div>
@@ -115,8 +155,9 @@
 
   <div class="table-responsive ms-1 mt-3">
     <!-- table for MOOC -->
+    <p class="table-headings">MOOC</p>
     <div class="table-responsive">
-      <table class="table table-bordered table-sm mb-0">
+      <table class="table table-bordered mb-0">
         <thead>
           <tr>
             <th>#</th>
@@ -128,16 +169,22 @@
           </tr>
         </thead>
         <tbody id="moocTable">
-          {% for record in mooc_records %}
-            <tr>
-              <td>{{ loop.index }}</td>
-              <td>{{ record.under }}</td>
-              <td>{{ record.title }}</td>
-              <td>{{ record.start_date }}</td>
-              <td>{{ record.completed_date }}</td>
-              <td>{{ record.score }}</td>
-            </tr>
-          {% endfor %}
+          {% if mooc_records %}
+            {% for record in mooc_records %}
+              <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ record.under if record.under else "" }}</td>
+                <td>{{ record.title if record.title else "" }}</td>
+                <td>{{ record.start_date if record.start_date else "" }}</td>
+                <td>{{ record.completed_date if record.completed_date else "" }}</td>
+                <td>{{ record.score if record.score else "" }}</td>
+              </tr>
+            {% endfor %}
+          {% else %}
+              <tr>
+                <td style="color:#f73b3b;" colspan="100">No records found</td>
+              </tr>
+          {% endif %}
         </tbody>
       </table>
     </div>
@@ -145,8 +192,9 @@
 
   <div class="table-responsive ms-1 mt-3">
     <!-- table for mini project -->
+    <p class="table-headings">Mini-project</p>
     <div class="table-responsive">
-      <table class="table table-bordered table-sm mb-0">
+      <table class="table table-bordered mb-0">
         <thead>
           <tr>
             <th>#</th>
@@ -157,15 +205,21 @@
           </tr>
         </thead>
         <tbody id="projectTable">
-          {% for record in project_records %}
-            <tr>
-              <td>{{ loop.index }}</td>
-              <td>{{ record.title }}</td>
-              <td>{{ record.man_hours }}</td>
-              <td>{{ record.start_date }}</td>
-              <td>{{ record.completed_date }}</td>  
-            </tr>
-          {% endfor %}
+          {% if project_records %}
+            {% for record in project_records %}
+              <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ record.title if record.title else "" }}</td>
+                <td>{{ record.man_hours if record.man_hours else "" }}</td>
+                <td>{{ record.start_date if record.start_date else "" }}</td>
+                <td>{{ record.completed_date if record.completed_date else "" }}</td>  
+              </tr>
+            {% endfor %}
+          {% else %}
+              <tr>
+                <td style="color: #f73b3b;" colspan="100">no records found</td>
+              </tr>
+          {% endif %}
         </tbody>
       </table>
     </div>
@@ -174,8 +228,9 @@
 
   <div class="table-responsive ms-1 mt-3">
     <!-- table for counselling records -->
+    <p class="table-headings">counselling</p>
     <div class="table-responsive">
-      <table class="table table-bordered table-sm mb-0">
+      <table class="table table-bordered mb-0">
         <thead>
           <tr>
             <th>#</th>
@@ -184,22 +239,22 @@
           </tr>
         </thead>
         <tbody id="counsellingTable">
-          {% for record in counselling_records %}
-            <tr>
-              <td>{{ loop.index }}</td>
-              <td>{{ record.date }}</td>
-              <td>{{ record.record }}</td>
-            </tr>
-          {% endfor %}
+          {% if counselling_records %}
+            {% for record in counselling_records %}
+              <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ record.date if record.date else "" }}</td>
+                <td>{{ record.record if record.record else "" }}</td>
+              </tr>
+            {% endfor %}
+          {% else %}
+              <tr>
+                <td style="color:#f73b3b;" colspan="100">No records found</td>
+              </tr>
+          {% endif %}
         </tbody>
       </table>
     </div>
-  </div>
-  <div class="col-12 d-flex justify-content-center">
-    <form action="/semester{{ semester_number }}-edit">
-      <input class="btn btn-dark mt-3 d-md-none btn" type="submit" value="edit">
-      <input class="btn btn-dark mt-3 d-none d-md-block btn-lg" type="submit" value="edit">
-    </form>
   </div>
 </main>
 

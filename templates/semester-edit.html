@@ -4,11 +4,15 @@
 
 
 {% block body %}
-<main class="d-flex flex-column ms-md-5 table-responsive g-3" style="max-width: 1200px;">
-  <h1 class="align-self-center">semester 1</h1>
+<main class="d-flex flex-column ms-md-5 table-responsive g-3 container">
+  <div class="p-2 d-flex align-items-center justify-content-center">
+    <h1 class="mb-0 sem-heading">semester {{ semester_number }}</h1>
+  </div>
+  <hr>
   <form action="{{ request.path }}" method="post">
     <div class="table-responsive ms-1 mt-3">
       <!-- table for attendance -->
+      <p class="table-headings">attendance</p>
       <div class="table-responsive">
         <table class="table table-bordered table-sm mb-0">
           <thead>
@@ -37,16 +41,16 @@
                 {% for record in attendance_records %}
                     <tr>
                         <td class="sno">{{ loop.index }}</td>
-                        <td class="sub-code"><input type="text" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1"></td>
-                        <td class="subject"><input type="text" name="attendance-row{{ loop.index }}-subject" value="{{ record.subject }}"></td>
-                        <td class="small-num"><input type="text" name="attendance-row{{ loop.index }}-T1" value="{{ record.t1 }}"></td>
-                        <td class="small-num"><input type="text" name="attendance-row{{ loop.index }}-A1" value="{{ record.a1 }}"></td>
-                        <td class="small-num"><input type="text" name="attendance-row{{ loop.index }}-P1"></td>
-                        <td class="small-num"><input type="text" name="attendance-row{{ loop.index }}-T2" value="{{ record.t2 }}"></td>
-                        <td class="small-num"><input type="text" name="attendance-row{{ loop.index }}-A2" value="{{ record.a2 }}"></td>
-                        <td class="small-num"><input type="text" name="attendance-row{{ loop.index }}-P2"></td>
-                        <td class="small-num"><input type="text" name="attendance-row{{ loop.index }}-T3" value="{{ record.t3 }}"></td>
-                        <td class="small-num"><input type="text" name="attendance-row{{ loop.index }}-A3" value="{{ record.a3 }}"></td>
+                        <td class="sub-code"><input type="text" name="attendance-row{{ loop.index }}-code" value="{{ record.code if record.code else '' }}"></td>
+                        <td class="subject"><input type="text" name="attendance-row{{ loop.index }}-subject" value="{{ record.subject if record.subject else '' }}"></td>
+                        <td class="small-num"><input type="text" class="percentage" name="attendance-row{{ loop.index }}-T1" value="{{ record.t1 if record.t1 else '' }}"></td>
+                        <td class="small-num"><input type="text" class="percentage" name="attendance-row{{ loop.index }}-A1" value="{{ record.a1 if record.a1 else '' }}"></td>
+                        <td class="small-num"><input type="text" readonly name="attendance-row{{ loop.index }}-P1"></td>
+                        <td class="small-num"><input type="text" class="percentage" name="attendance-row{{ loop.index }}-T2" value="{{ record.t2 if record.t2 else '' }}"></td>
+                        <td class="small-num"><input type="text" class="percentage" name="attendance-row{{ loop.index }}-A2" value="{{ record.a2 if record.a2 else '' }}"></td>
+                        <td class="small-num"><input type="text" readonly name="attendance-row{{ loop.index }}-P2"></td>
+                        <td class="small-num"><input type="text" class="percentage" name="attendance-row{{ loop.index }}-T3" value="{{ record.t3 if record.t3 else '' }}"></td>
+                        <td class="small-num"><input type="text" class="percentage" name="attendance-row{{ loop.index }}-A3" value="{{ record.a3 if record.a3 else '' }}"></td>
                         <td class="small-num"><input type="text" name="attendance-row{{ loop.index }}-P3"></td>
                     </tr>
                 {% endfor %}
@@ -55,22 +59,22 @@
                     <td class="sno">1</td>
                     <td class="sub-code"><input type="text" name="attendance-row1-code"></td>
                     <td class="subject"><input type="text" name="attendance-row1-subject"></td>
-                    <td class="small-num"><input type="text" name="attendance-row1-T1"></td>
-                    <td class="small-num"><input type="text" name="attendance-row1-A1"></td>
-                    <td class="small-num"><input type="text" name="attendance-row1-P1"></td>
-                    <td class="small-num"><input type="text" name="attendance-row1-T2"></td>
-                    <td class="small-num"><input type="text" name="attendance-row1-A2"></td>
-                    <td class="small-num"><input type="text" name="attendance-row1-P2"></td>
-                    <td class="small-num"><input type="text" name="attendance-row1-T3"></td>
-                    <td class="small-num"><input type="text" name="attendance-row1-A3"></td>
-                    <td class="small-num"><input type="text" name="attendance-row1-P3"></td>
+                    <td class="small-num"><input class="percentage" type="text" name="attendance-row1-T1"></td>
+                    <td class="small-num"><input class="percentage" type="text" name="attendance-row1-A1"></td>
+                    <td class="small-num"><input readonly type="text" name="attendance-row1-P1"></td>
+                    <td class="small-num"><input class="percentage" type="text" name="attendance-row1-T2"></td>
+                    <td class="small-num"><input class="percentage" type="text" name="attendance-row1-A2"></td>
+                    <td class="small-num"><input readonly type="text" name="attendance-row1-P2"></td>
+                    <td class="small-num"><input class="percentage" type="text" name="attendance-row1-T3"></td>
+                    <td class="small-num"><input class="percentage" type="text" name="attendance-row1-A3"></td>
+                    <td class="small-num"><input readonly type="text" name="attendance-row1-P3"></td>
                 </tr>
             {% endif %}
             </tbody>
       </table>
       </div>
       <!-- add row button for attendance table  -->
-      <button type="button" class="btn btn-light btn-small d-flex align-items-center addBtn" id="attendanceAddBtn" data-for="attendanceTable" data-increement="iatTotalRows">
+      <button type="button" class="btn btn-light btn-small d-flex align-items-center addBtn" id="attendanceAddBtn" data-for="attendanceTable" data-increement="attendanceTotalRows">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
           <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
           <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
@@ -85,6 +89,7 @@
   
     <div class="table-responsive ms-1 mt-3">
       <!-- table for iat -->
+      <p class="table-headings">IAT</p>
       <div class="table-responsive">
         <table class="table table-bordered table-sm mb-0">
           <thead>
@@ -104,12 +109,12 @@
                 {% for record in iat_records %}
                     <tr>
                         <td class="sno">{{ loop.index }}</td>
-                        <td class="sub-code"><input type="text" name="iat-row{{ loop.index }}-code" value="{{ record.code }}"></td>
-                        <td class="subject"><input type="text" name="iat-row{{ loop.index }}-subject" value="{{ record.subject }}"></td>
-                        <td class="small-num"><input type="text" name="iat-row{{ loop.index }}-max" value="{{ record.max }}"></td>
-                        <td class="small-num"><input type="text" name="iat-row{{ loop.index }}-iat1" value="{{ record.iat1 }}"></td>
-                        <td class="small-num"><input type="text" name="iat-row{{ loop.index }}-iat2" value="{{ record.iat2 }}"></td>
-                        <td class="small-num"><input type="text" name="iat-row{{ loop.index }}-iat3" value="{{ record.iat3 }}"></td>
+                        <td class="sub-code"><input type="text" name="iat-row{{ loop.index }}-code" value="{{ record.code if record.code else '' }}"></td>
+                        <td class="subject"><input type="text" name="iat-row{{ loop.index }}-subject" value="{{ record.subject if record.subject else '' }}"></td>
+                        <td class="small-num"><input type="text" name="iat-row{{ loop.index }}-max" value="{{ record.max if record.max else '' }}"></td>
+                        <td class="small-num"><input type="text" name="iat-row{{ loop.index }}-iat1" value="{{ record.iat1 if record.iat1 else '' }}"></td>
+                        <td class="small-num"><input type="text" name="iat-row{{ loop.index }}-iat2" value="{{ record.iat2 if record.iat2 else '' }}"></td>
+                        <td class="small-num"><input type="text" name="iat-row{{ loop.index }}-iat3" value="{{ record.iat3 if record.iat3 else '' }}"></td>
                         <td class="small-num"><input type="text" name="iat-row{{ loop.index }}-avg"></td>
                     </tr>
                 {% endfor %}
@@ -129,7 +134,7 @@
       </table>
       </div>
       <!-- add row button for iat table  -->
-      <button type="button" class="btn btn-light btn-small d-flex align-items-center addBtn" id="iatAddBtn" data-for="iatTable" data-increement="attendanceTotalRows">
+      <button type="button" class="btn btn-light btn-small d-flex align-items-center addBtn" id="iatAddBtn" data-for="iatTable" data-increement="iatTotalRows">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
           <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
           <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
@@ -144,6 +149,7 @@
   
     <div class="table-responsive ms-1 mt-3">
       <!-- table for events -->
+      <p class="table-headings">events</p>
       <div class="table-responsive">
         <table class="table table-bordered table-sm mb-0">
           <thead>
@@ -159,9 +165,9 @@
                 {% for record in event_records %}
                     <tr>
                         <td class="sno">{{ loop.index }}></td>
-                        <td class="large-text"><input type="text" name="events-row{{ loop.index }}-name" value="{{ record.club_name }}"></td>
-                        <td class="large-text"><input type="textbox" name="events-row{{ loop.index }}-title" value="{{ record.event_title }}"></td>
-                        <td class="date"><input type="date" name="events-row{{ loop.index }}-date" value="{{ record.event_date }}"></td>
+                        <td class="large-text"><input type="text" name="events-row{{ loop.index }}-name" value="{{ record.club_name if record.club_name else '' }}"></td>
+                        <td class="large-text"><input type="textbox" name="events-row{{ loop.index }}-title" value="{{ record.event_title if record.event_title else '' }}"></td>
+                        <td class="date"><input type="date" name="events-row{{ loop.index }}-date" value="{{ record.event_date if record.event_date else '' }}"></td>
                     </tr>
                 {% endfor %}
             {% else %}
@@ -190,6 +196,7 @@
   
     <div class="table-responsive ms-1 mt-3">
       <!-- table for MOOC -->
+      <p class="table-headings">mooc</p>
       <div class="table-responsive">
         <table class="table table-bordered table-sm mb-0">
           <thead>
@@ -207,11 +214,11 @@
                 {% for record in mooc_records %}
                     <tr>
                         <td class="sno">{{ loop.index }}</td>
-                        <td class="large-text"><input type="text" name="mooc-row{{ loop.index }}-under" value="{{ record.under }}"></td>
-                        <td class="large-text"><input type="text" name="mooc-row{{ loop.index }}-title" value="{{ record.title }}"></td>
-                        <td class="date"><input type="text" name="mooc-row{{ loop.index }}-start" value="{{ record.start_date }}"></td>
-                        <td class="date"><input type="text" name="mooc-row{{ loop.index }}-completed" value="{{ record.completed_date }}"></td>
-                        <td class="small-num"><input type="text" name="mooc-row{{ loop.index }}-score" value="{{ record.score }}"></td>
+                        <td class="large-text"><input type="text" name="mooc-row{{ loop.index }}-under" value="{{ record.under if record.under else '' }}"></td>
+                        <td class="large-text"><input type="text" name="mooc-row{{ loop.index }}-title" value="{{ record.title if record.title else '' }}"></td>
+                        <td class="date"><input type="text" name="mooc-row{{ loop.index }}-start" value="{{ record.start_date if record.start_date else '' }}"></td>
+                        <td class="date"><input type="text" name="mooc-row{{ loop.index }}-completed" value="{{ record.completed_date if record.completed_date else '' }}"></td>
+                        <td class="small-num"><input type="text" name="mooc-row{{ loop.index }}-score" value="{{ record.score if record.score else '' }}"></td>
                     </tr>
                 {% endfor %}
             {% else %}
@@ -219,8 +226,8 @@
                     <td class="sno">1</td>
                     <td class="large-text"><input type="text" name="mooc-row1-under"></td>
                     <td class="large-text"><input type="text" name="mooc-row1-title"></td>
-                    <td class="date"><input type="text" name="mooc-row1-start"></td>
-                    <td class="date"><input type="text" name="mooc-row1-completed"></td>
+                    <td class="date"><input type="date" name="mooc-row1-start"></td>
+                    <td class="date"><input type="date" name="mooc-row1-completed"></td>
                     <td class="small-num"><input type="text" name="mooc-row1-score"></td>
                 </tr>
             {% endif %}
@@ -244,6 +251,7 @@
   
     <div class="table-responsive ms-1 mt-3">
       <!-- table for mini project -->
+      <p class="table-headings">Mini-project</p>
       <div class="table-responsive">
         <table class="table table-bordered table-sm mb-0">
           <thead>
@@ -260,10 +268,10 @@
                 {% for record in project_records %}
                     <tr>
                         <td class="sno">{{ loop.index }}></td>
-                        <td class="large-text"><input type="text" name="project-row{{ loop.index }}-title" value="{{ record.title }}"></td>
-                        <td class="small-num"><input type="text" name="project-row{{ loop.index }}-hours" value="{{ record.man_hours }}"></td>
-                        <td class="date"><input type="text" name="project-row{{ loop.index }}-start" value="{{ record.start_date }}"></td>
-                        <td class="date"><input type="text" name="project-row{{ loop.index }}-completed" value="{{ record.completed_date }}"></td>  
+                        <td class="large-text"><input type="text" name="project-row{{ loop.index }}-title" value="{{ record.title if record.title else '' }}"></td>
+                        <td class="small-num"><input type="text" name="project-row{{ loop.index }}-hours" value="{{ record.man_hours if record.man_hours else '' }}"></td>
+                        <td class="date"><input type="text" name="project-row{{ loop.index }}-start" value="{{ record.start_date if record.start_date else '' }}"></td>
+                        <td class="date"><input type="text" name="project-row{{ loop.index }}-completed" value="{{ record.completed_date if record.completed_date else '' }}"></td>  
                     </tr>
                 {% endfor %}
             {% else %}
@@ -271,8 +279,8 @@
                     <td class="sno">1</td>
                     <td class="large-text"><input type="text" name="project-row1-title"></td>
                     <td class="small-num"><input type="text" name="project-row1-hours"></td>
-                    <td class="date"><input type="text" name="project-row1-start"></td>
-                    <td class=date><input type="text" name="project-row1-completed"></td>  
+                    <td class="date"><input type="date" name="project-row1-start"></td>
+                    <td class=date><input type="date" name="project-row1-completed"></td>  
                 </tr>
             {% endif %}
           </tbody>
@@ -295,6 +303,7 @@
   
     <div class="table-responsive ms-1 mt-3">
       <!-- table for counselling records -->
+      <p class="table-headings">counselling</p>
       <div class="table-responsive">
         <table class="table table-bordered table-sm mb-0">
           <thead>
@@ -309,14 +318,14 @@
                 {% for record in counselling_records %}
                     <tr>
                         <td class="sno">{{ loop.index }}</td>
-                        <td class="date"><input type="text" name="counselling-row{{ loop.index }}-date" value="{{ record.date }}"></td>
-                        <td class="large-text"><textarea name="counselling-row{{ loop.index }}-record">{{ record.record }}</textarea></td>
+                        <td class="date"><input type="date" name="counselling-row{{ loop.index }}-date" value="{{ record.date if record.date else '' }}"></td>
+                        <td class="large-text"><textarea name="counselling-row{{ loop.index }}-record">{{ record.record if record.record else ''   }}</textarea></td>
                     </tr>
                 {% endfor %}
             {% else %}
                 <tr>
                     <td class="sno">1</td>
-                    <td class="date"><input type="text" name="counselling-row1-date"></td>
+                    <td class="date"><input type="date" name="counselling-row1-date"></td>
                     <td class="large-text"><textarea name="counselling-row1-record"></textarea></td>
                 </tr>
             {% endif %}
@@ -337,8 +346,8 @@
       <input type="number" aria-hidden="true" id="counsellingTotalRows" name="counselling-rows" class="d-none">
     </div>
     <div class="col-12 d-flex justify-content-center">
-      <input class="btn btn-dark mt-3 d-md-none btn" type="submit" value="Submit">
-      <input class="btn btn-dark mt-3 d-none d-md-block btn-lg" type="submit" value="Submit">
+      <input class="btn btn-dark mt-3 d-md-none btn" type="SUBMIT" value="Submit">
+      <input class="btn btn-dark mt-3 d-none d-md-block btn-lg" type="submit" value="SUBMIT">
     </div>
   </form>
 </main>

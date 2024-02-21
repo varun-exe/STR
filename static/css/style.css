@@ -1,7 +1,24 @@
+* {
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
 
 td textarea, td input {
     width: 100%;
     border: 1px solid rgb(233, 233, 233);
+}
+
+
+td input:focus, td textarea:focus {
+    outline: none !important;
+    border:1px solid black;
+  }
+
+
+
+th {
+    text-transform: uppercase;
 }
 
 .subject {
@@ -25,4 +42,37 @@ td textarea, td input {
 
 .large-text {
     min-width: 200px;
+}
+
+.active-link {
+    color: white;
+    background-color: black;
+}
+
+.active-link:hover {
+    color: white;
+    background-color: black;
+}
+
+
+.table-headings {
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 24px;
+}
+
+.sem-heading {
+    font-weight: 600;
+    font-size: 36px;
+    text-transform: uppercase;
+}
+
+
+/* danger */
+main {
+    margin-bottom: 20px;
+}
+
+label {
+    text-transform: uppercase;
 }
