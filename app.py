@@ -4,11 +4,10 @@ from datetime import datetime
 from helper import validate, number_or_none, date_or_none, strip_if_not_none, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
 
-
 app = Flask(__name__)
 
 
-app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///test.db"
+app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:v1v2v3v4v5@localhost/str"
 app.config['SECRET_KEY'] = '$catonthekeyboard'
 db = SQLAlchemy(app)
 
