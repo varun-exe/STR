@@ -3,11 +3,13 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from helper import validate, number_or_none, date_or_none, strip_if_not_none, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
+import pymysql
+import sqlalchemy
 
 app = Flask(__name__)
 
 
-app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:v1v2v3v4v5@localhost/str"
+app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///str.db"
 app.config['SECRET_KEY'] = '$catonthekeyboard'
 db = SQLAlchemy(app)
 
@@ -305,6 +307,7 @@ def edit_semester(semester_number):
                                 subject=subject, t1=t1, a1=a1, t2=t2, a2=a2, 
                                 t3=t3, a3=a3, semester=semester_number)
             
+    
             db.session.add(record)
 
 
@@ -323,6 +326,7 @@ def edit_semester(semester_number):
             record = Iat(user_id=session['user_id'], code=code, subject=subject,
                          max=max, iat1=iat1, iat2=iat2, iat3=iat3, semester=semester_number)
             
+
             db.session.add(record)
 
 
@@ -382,7 +386,10 @@ def edit_semester(semester_number):
 
             db.session.add(row)
 
-        db.session.commit()
+        try:
+            db.session.commit()
+        except sqlalchemy.exc.OperationalError as e:
+                return render_template("error.html", message="An error occurred, make sure your iat values don't execeed the max values and the attended attendance values don't exceed total value")
 
         return redirect(f"/semester{semester_number}")
 
@@ -450,14 +457,21 @@ def edit_general():
         return render_template("general-edit.html", general=general_info)
 
 
-@app.route("/dummy", methods=['GET', 'POST'])
-def dummy():
-    if request.method == 'POST':
-        print("*"*10)
-        print(request.form.get('myname'))
-        print("*"*10)
-        return 'check terminal'
-    else:
-        return render_template("dummy.html")
 
-        
+@app.route("/stats")
+def stats():
+    connection = pymysql.connect(host='localhost',
+                             user='root',
+                             password='v1v2v3v4v5',
+                             database='str',
+                             cursorclass=pymysql.cursors.DictCursor)
+
+    with connection:
+        with connection.cursor() as cursor: 
+            cursor.execute("SELECT * FROM attendance_average;")
+            attendance_stats = cursor.fetchall()
+            cursor.execute("SELECT * FROM iat_average;")
+            iat_stats = cursor.fetchall()
+
+    
+            return render_template("stats.html", attendance_stats=attendance_stats, iat_stats=iat_stats)

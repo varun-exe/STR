@@ -1,8 +1,0 @@
-breadcrumbs for user > sem[number]
-
-write validation logic for inputs (front and server-side)
-
-disallow semester number not between 1 and 8 //done
-
-
-fix nav bar buttons (make the entire li clickable)
