@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from helper import validate, number_or_none, date_or_none, strip_if_not_none, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
-import pymysql
+import sqlite3
 import sqlalchemy
 
 app = Flask(__name__)
@@ -388,7 +388,7 @@ def edit_semester(semester_number):
 
         try:
             db.session.commit()
-        except sqlalchemy.exc.OperationalError as e:
+        except sqlalchemy.exc.IntegrityError as e:
                 return render_template("error.html", message="An error occurred, make sure your iat values don't execeed the max values and the attended attendance values don't exceed total value")
 
         return redirect(f"/semester{semester_number}")
@@ -460,18 +460,15 @@ def edit_general():
 
 @app.route("/stats")
 def stats():
-    connection = pymysql.connect(host='localhost',
-                             user='root',
-                             password='v1v2v3v4v5',
-                             database='str',
-                             cursorclass=pymysql.cursors.DictCursor)
 
-    with connection:
-        with connection.cursor() as cursor: 
-            cursor.execute("SELECT * FROM attendance_average;")
-            attendance_stats = cursor.fetchall()
-            cursor.execute("SELECT * FROM iat_average;")
-            iat_stats = cursor.fetchall()
+    connection = sqlite3.connect('instance/str.db')
+    cursor = connection.cursor()
 
-    
-            return render_template("stats.html", attendance_stats=attendance_stats, iat_stats=iat_stats)
+    cursor.execute("SELECT * FROM attendance_average;")
+    attendance_stats = cursor.fetchall()
+    cursor.execute("SELECT * FROM iat_average;")
+    iat_stats = cursor.fetchall()
+
+    cursor.close()
+
+    return render_template("stats.html", attendance_stats=attendance_stats, iat_stats=iat_stats)
